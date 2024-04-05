@@ -1,0 +1,90 @@
+.page {
+  height: 100dvh;
+  margin: 0 100px;
+  overflow: hidden;
+}
+
+.container {
+  display: grid;
+  align-content: start;
+  height: 100vh;
+  transform-style: preserve-3d;
+  perspective: 600px;
+}
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-content: start;
+  padding: 10px 5px;
+  border-radius: 15px;
+  overflow-y: visible;
+}
+
+.smart-scroll {
+  overflow-y: auto;
+}
+
+.list-group-item { 
+  margin-bottom: 4px;
+  border-radius: 15px;
+  width: calc(100% - 6px);
+  transition: margin 0.3s 1.7s ease;
+}
+
+.list-group::-webkit-scrollbar {
+  width: 5px;
+}
+
+.list-group::-webkit-scrollbar-thumb {
+  box-sizing: border-box;
+  width: 26px;
+  height: 16px;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: #0dcaf0;
+  cursor: pointer;
+}
+
+.list-group::-webkit-scrollbar-track {
+  width: 100%;
+  height: 10px;
+  border: none;
+  border-radius: 0;
+  background-color: #000;
+  cursor: pointer;
+}
+
+/* .list-group-item {
+} */
+
+
+/* animations*/
+
+.animate__bounce {
+  -webkit-animation-name: bounce;
+  animation-name: bounce;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+}
+
+.animate__bounceInUp {
+  -webkit-animation-name: bounceInUp;
+  animation-name: bounceInUp;
+}
+
+.animate__jello {
+  animation-name: jello;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animate__hinge {
+  animation-name: hinge;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
