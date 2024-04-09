@@ -1,23 +1,41 @@
 .page {
   height: 100dvh;
-  margin: 0 100px;
   overflow: hidden;
 }
 
 .container {
   display: grid;
-  align-content: start;
-  height: 100vh;
+  align-items: start;
+  width: fit-content;
+  /* height: 100%; */
   transform-style: preserve-3d;
   perspective: 600px;
 }
 
+/* .form-control {
+  caret-color: #0dcaf0;
+  background-image: url(./images/input.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #0dcaf0;
+} */
+/* 
+.form-control::placeholder {
+  color: #0dcaf0;
+}
+
+.form-control:hover .form-control::placeholder {
+  font-size: 18px;
+} */
+
 .list-group {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  align-content: start;
-  padding: 10px 5px;
+  min-width: calc(100% + 60px);
+  max-height: 470px;
+  justify-self: right;
+  padding: 10px 5px 10px 60px;
   border-radius: 15px;
   overflow-y: visible;
 }
@@ -29,7 +47,7 @@
 .list-group-item { 
   margin-bottom: 4px;
   border-radius: 15px;
-  width: calc(100% - 6px);
+  width: 100%;
   transition: margin 0.3s 1.7s ease;
 }
 

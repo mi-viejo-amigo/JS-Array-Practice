@@ -1,6 +1,6 @@
 
 // Получаем Тэмплэйт
-let template = document.querySelector('#list-item_template').content;
+const template = document.querySelector('#list-item_template').content;
 // Heading
 const heading = document.getElementById('heading');
 // input
@@ -15,8 +15,9 @@ const taskList = document.querySelector('#list');
 createTaskBtn.addEventListener('click', () => {
   const taskElement = template.querySelector('.list-group-item').cloneNode(true);
   const taskTitle = taskElement.querySelector('#task-title');
+  taskElement.classList.remove('animate__animated', 'animate__bounceInUp'); // на всякий случай убираю классы
   taskTitle.textContent = input.value;
-
+  setScrollBehavior();
 // Delete task Btm
   const taskDeleteBtn = taskElement.querySelector('.btn-danger');
   taskDeleteBtn.addEventListener('click', () => {
@@ -29,6 +30,7 @@ createTaskBtn.addEventListener('click', () => {
       taskElement.remove();
       saveTaskList(); // Вызываем функцию для сохранения списка в local Storage при УДАЛЕНИИ элемента
     }, 2000);
+    setScrollBehavior();
   });
 
   if (input.value.length >= 2) {
@@ -57,7 +59,6 @@ createTaskBtn.addEventListener('click', () => {
   } else {
     alert('Название задачи должно содержать не менее 2 символов.');
   }
-
   input.value = '';
 });
 
@@ -69,7 +70,9 @@ const savedTaskList = localStorage.getItem('taskList');
 // Если есть сохраненный список, загружаем его
 if (savedTaskList) {
   taskList.innerHTML = savedTaskList;
+  setScrollBehavior();
   // console.log(taskList.innerHTML);
+  console.log(taskList.classList);
   // Восстанавливаем обработчики событий для кнопок удаления
   taskList.querySelectorAll('.btn-danger').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -100,20 +103,24 @@ function saveTaskList() {
 
 
 // Делаем умный скролл для списка^
-let taskElementsArray;
-let hasClass;
-// Запускаем проверку через 1.6 секунд после загрузки страницы (ЧТО БЫ АНИМАЦИЯ УЖЕ ОТЫГРАЛА)
-setTimeout(() => {
-  // Выполняем проверку
-  taskElementsArray = Array.from(document.querySelectorAll('.list-group-item'));
-  hasClass = taskElementsArray.every(taskItem => taskItem.classList.contains('animate__bounceInUp'));
+function setScrollBehavior() {
+  let taskElementsArray;
+  let hasClass;
+  // Запускаем проверку через 1.6 секунд после загрузки страницы (ЧТО БЫ АНИМАЦИЯ УЖЕ ОТЫГРАЛА)
+  setTimeout(() => {
+    // Выполняем проверку
+    taskElementsArray = Array.from(document.querySelectorAll('.list-group-item'));
+    hasClass = taskElementsArray.every(taskItem => taskItem.classList.contains('animate__bounceInUp'));
+  
+    if (Array.from(taskList.children).length >= 6 && !hasClass) {
+      taskList.classList.add('smart-scroll');
+    } else {
+      taskList.classList.remove('smart-scroll');
+    }
+  }, 1600);
+}
+setScrollBehavior();
 
-  if (Array.from(taskList.children).length >= 8 && !hasClass) {
-    taskList.classList.add('smart-scroll');
-  } else {
-    taskList.classList.remove('smart-scroll');
-  }
-}, 1600);
 
 
 // array + object PRACTICE
