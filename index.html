@@ -34,7 +34,13 @@
       <ul class="list-group list-group-flush" id="list">
         
       </ul>
-      
+
+      <dialog class="my-dialog" id="dialog-id">
+        Функционал этой кнопки пока находится на стадии разработки,
+         приносим извинения за доставленные неудобства ^^
+         <button type="button" onclick="window['dialog-id'].close()">Прощаю</button>
+      </dialog>
+
     </div>
     <template id="list-item_template">
       <li
@@ -42,7 +48,9 @@
     >
       <span id="task-title"></span>
       <span>
-        <span class="btn btn-small btn-success">&check;</span>
+        <span class="btn btn-small btn-success" 
+        type="button"  
+        aria-controls="dialog-id">&check;</span>
         <span class="btn btn-small btn-danger">&times;</span>
       </span>
     </li>

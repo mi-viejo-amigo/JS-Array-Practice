@@ -7,10 +7,48 @@ const heading = document.getElementById('heading');
 const input = document.querySelector('#title');
 // create Task Btn
 const createTaskBtn = document.querySelector('#create');
+// Modal window
+const dialogWindow = document.querySelector('#dialog-id');
 
 // Узлы
 const taskList = document.querySelector('#list');
 
+// CALLBACKS FUNCTIONS START 
+// коллбек открытия и закрытия модалки.
+const setModalBehavior = (window)=> {
+  window.showModal();
+  window.addEventListener('click', (event) => {
+    if (event.target === window) {
+      window.close();
+    }
+  });
+}
+const createModalHandler = (window) => {
+  return () => {
+    setModalBehavior(window);
+  };
+};
+
+// Колбек удаления Таски
+const deleteTask = (itemToDelete) => {
+  itemToDelete.style.marginBottom = `-${itemToDelete.offsetHeight}px`; // Устанавливаем отрицательный margin-bottom для элемента, который мы удаляе
+  // Добавляем класс анимации к элементу задачи
+  itemToDelete.classList.add('animate__hinge');
+  setTimeout(() => {
+    // Удаляем элемент задачи
+    itemToDelete.classList.remove('animate__hinge');
+    itemToDelete.remove();
+    saveTaskList(); // Вызываем функцию для сохранения списка в local Storage при УДАЛЕНИИ элемента
+  }, 2000);
+  setScrollBehavior();
+}
+const deleteTaskHandler = (itemToDelete) => {
+  return () => {
+    deleteTask(itemToDelete);
+  };
+};
+// CALLBACKS FUNCTIONS END ^
+//
 // Выводим задачи в список
 createTaskBtn.addEventListener('click', () => {
   const taskElement = template.querySelector('.list-group-item').cloneNode(true);
@@ -18,20 +56,14 @@ createTaskBtn.addEventListener('click', () => {
   taskElement.classList.remove('animate__animated', 'animate__bounceInUp'); // на всякий случай убираю классы
   taskTitle.textContent = input.value;
   setScrollBehavior();
+
+  // Open modal Button 
+  const greenButton = taskElement.querySelector('.btn-success');
+  greenButton.addEventListener('click', createModalHandler(dialogWindow));
+
 // Delete task Btm
   const taskDeleteBtn = taskElement.querySelector('.btn-danger');
-  taskDeleteBtn.addEventListener('click', () => {
-    taskElement.style.marginBottom = `-${taskElement.offsetHeight}px`; // Устанавливаем отрицательный margin-bottom для элемента, который мы удаляе
-    // Добавляем класс анимации к элементу задачи
-    taskElement.classList.add('animate__hinge');
-    setTimeout(() => {
-      // Удаляем элемент задачи
-      taskElement.classList.remove('animate__hinge');
-      taskElement.remove();
-      saveTaskList(); // Вызываем функцию для сохранения списка в local Storage при УДАЛЕНИИ элемента
-    }, 2000);
-    setScrollBehavior();
-  });
+  taskDeleteBtn.addEventListener('click', deleteTaskHandler(taskElement));
 
   if (input.value.length >= 2) {
     taskList.prepend(taskElement)
@@ -63,8 +95,8 @@ createTaskBtn.addEventListener('click', () => {
 });
 
 
-
 // Ререндер страницы при участии ChatGPT magic <START>
+// open modal Button 
 // Проверяем, есть ли сохраненный список в localStorage
 const savedTaskList = localStorage.getItem('taskList');
 // Если есть сохраненный список, загружаем его
@@ -72,7 +104,11 @@ if (savedTaskList) {
   taskList.innerHTML = savedTaskList;
   setScrollBehavior();
   // console.log(taskList.innerHTML);
-  console.log(taskList.classList);
+  // console.log(taskList.classList);
+  // Восстанавливаем обработчики событий для кнопок Modal Window
+  taskList.querySelectorAll('.btn-success').forEach(openModalBtn => {
+    openModalBtn.addEventListener('click', createModalHandler(dialogWindow)); // передали коллбек открытия/закрытия модалки
+  });
   // Восстанавливаем обработчики событий для кнопок удаления
   taskList.querySelectorAll('.btn-danger').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -148,11 +184,32 @@ heading.textContent = bestTitles[randomIndexOfArray].title + ' ^^';
 // console.log(heading.textContent);
 
 
+console.log('first massage');
 
+setTimeout(()=> {
+  console.log('second massage');
+},3000);
+
+let some = 'someValue';
+
+const promise = new Promise((resolve, reject)=> {
+  if (some) {
+    resolve('third massage')
+  }
+});
+
+promise.then(function (value) {
+  console.log(value);
+})
+  
+
+
+for (let i = 0; i <= 99; i += 1) {
+  console.log('Это сообщение нужно показать в консоли миллион раз');
+} 
+
+console.log('last massage');
 
 
 // localStorage.clear();
-
-
-
 
