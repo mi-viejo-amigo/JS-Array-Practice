@@ -10,6 +10,7 @@ dialog {
   gap: 10px;
   justify-items: center;
   max-width: 600px;
+  max-block-size: min-content;
   font-size: 18px;
   transition: opacity 0.3s ease-in-out;
 }

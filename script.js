@@ -47,10 +47,8 @@ const deleteTaskHandler = (itemToDelete) => {
     deleteTask(itemToDelete);
   };
 };
-// CALLBACKS FUNCTIONS END ^
-//
-// Выводим задачи в список
-createTaskBtn.addEventListener('click', () => {
+
+function createTask() {
   const taskElement = template.querySelector('.list-group-item').cloneNode(true);
   const taskTitle = taskElement.querySelector('#task-title');
   taskElement.classList.remove('animate__animated', 'animate__bounceInUp'); // на всякий случай убираю классы
@@ -92,7 +90,19 @@ createTaskBtn.addEventListener('click', () => {
     alert('Название задачи должно содержать не менее 2 символов.');
   }
   input.value = '';
+}
+// CALLBACKS FUNCTIONS END ^
+//
+
+// Выводим задачи в список
+// по клику клавиши ENTER в input
+input.addEventListener('keydown', (evt)=> {
+  if (evt.key === 'Enter') {
+    createTask();
+  }
 });
+//по кнопке "Добавить"
+createTaskBtn.addEventListener('click', createTask);
 
 
 // Ререндер страницы при участии ChatGPT magic <START>
